@@ -1,51 +1,57 @@
 #   Nicolas Callier
 #  ​ CSCI 102 – Section H
 #   Assessment 12C
-#   Time: 45 minutes
+#   Time: 2 hours
 
 import math
 
 def load_file(filename):
-    with open(filename, 'r') as f:
-        lines = [line.strip().split() for line in f]
+    with open(filename,'r') as text:
+        lines = text.readlines()
+    for i in range(0,len(lines)-1):
+        lines[i] = lines[i][:-1]
     return lines
 
-def update_string(string1, string2, index):
-    string1 = list(string1)
-    string1[index] = string2
-    print("".join(string1))
+lines = load_file('test.txt') 
+print("OUTPUT", lines)
+    
 
-def find_word_count(word_list, word):
+def update_string(string1, string2, index):
+    print(string1[:index] + string2 + string1[index+1:])
+update_string("Hello World", 'yup', 3)
+
+def find_word_count(lst, word):
     count = 0
-    for w in word_list:
-        count += w.count(word)
+    for line in lst:
+        count += line.count(word)
     return count
 
-def score_finder(players, scores, player):
-    player = player.capitalize()
-    if player in players:
-        index = players.index(player)
-        print(f"{player} got a score of {scores[index]}")
+def score_finder(players, scores, name):
+    name = name.lower().capitalize()
+    if name in players:
+        idx = players.index(name)
+        print(f"{name} got a score of {scores[idx]}")
     else:
         print("player not found")
+players = ["Mary", "Cody", "Joe", "Jill", "Xai", "Bodo"]
+scores = [5, 8, 10, 6, 10, 4]
+score_finder(players, scores, "jill")
+score_finder(players, scores, "Manuel")
 
-def union(list1, list2):
-    set1 = set(list1)
-    set2 = set(list2)
-    return list(set1.union(set2))
+def union(lst1, lst2):
+    return list(set(lst1) | set(lst2))
+players2 = ["Melvin", "Martian", "Baka", "Xai", "Cody"]
+union(scores, players2)
+[5, 8, 10, 6, 4, "Melvin", "Martian", "Baka", "Xai", "Cody"]
 
-def intersect(list1, list2):
-    set1 = set(list1)
-    set2 = set(list2)
-    return list(set1.intersection(set2))
+def intersect(lst1, lst2):
+    return list(set(lst1) & set(lst2))
 
-def not_in(list1, list2):
-    set1 = set(list1)
-    set2 = set(list2)
-    return list(set1.difference(set2))
+def not_in(lst1, lst2):
+    return list(set(lst1) - set(lst2))
 
 def is_prime(n):
-    if n <= 1:
+    if n == 1:
         return False
     elif n == 2:
         return True
@@ -56,3 +62,4 @@ def is_prime(n):
             if n % i == 0:
                 return False
         return True
+
